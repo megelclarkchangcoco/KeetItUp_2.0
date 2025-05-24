@@ -1,0 +1,6 @@
+<!-- res/drawable/user_icon_resized.xml -->
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/passwordusers_icons"
+    android:gravity="center"
+    android:width="20px"
+    android:height="20px" />
