@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">KeetItUp_2.0</string>
+    <string-array name="taskfrequency">
+
+        <item>Daily</item>
+        <item>Every weekday (Mon–Fri)</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Quarterly</item>
+
+    </string-array>
+
+    <string-array name="notificationCategory">
+
+        <item>Today</item>
+        <item>This Week</item>
+        <item>This Year</item>
+
+    </string-array>
 </resources>

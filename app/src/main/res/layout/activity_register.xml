@@ -63,13 +63,14 @@
         android:drawableStart="@drawable/loginuser_icon_resize"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Username"
+        android:hint="Fullname"
         android:inputType="text"
         android:textColorHint="@color/gray"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerName_text" />
+        app:layout_constraintTop_toBottomOf="@+id/registerName_text"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/registerPhone_text"
@@ -99,7 +100,8 @@
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPhone_text" />
+        app:layout_constraintTop_toBottomOf="@+id/registerPhone_text"
+        tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/username_text"
@@ -130,7 +132,8 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username_text" />
+        app:layout_constraintTop_toBottomOf="@+id/username_text"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/password_text2"
@@ -161,7 +164,8 @@
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_text2" />
+        app:layout_constraintTop_toBottomOf="@+id/password_text2"
+        tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/register_button"
@@ -176,7 +180,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPassword_input" />
+        app:layout_constraintTop_toBottomOf="@+id/registerPassword_input"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/slogan_text4"
@@ -200,6 +205,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.022"
         app:layout_constraintStart_toEndOf="@+id/slogan_text4"
-        app:layout_constraintTop_toBottomOf="@+id/register_button" />
+        app:layout_constraintTop_toBottomOf="@+id/register_button"
+        tools:ignore="TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

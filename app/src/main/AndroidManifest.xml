@@ -13,9 +13,17 @@
         android:theme="@style/Theme.KeetItUp_20"
         tools:targetApi="35">
         <activity
-            android:name=".HomeActivity"
+            android:name=".NotificationActivity"
             android:exported="false" />
-        <!-- Registration and Login Activities -->
+        <activity
+            android:name=".AddTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TaskListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" /> <!-- Registration and Login Activities -->
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />

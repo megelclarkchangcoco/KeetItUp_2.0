@@ -9,5 +9,9 @@
     <color name="navbar_color">#F4F4F4</color>
     <color name="active_nav_color">#FFB300</color>
     <color name="inactive_nav_color">#9E9E9E</color>
+    <color name="active_icon_color">#FF5300</color>
+    <color name="active_text_color">#FF5300</color>
+    <color name="inactive_icon_color">#9E9E9E</color>
+    <color name="inactive_text_color">#9E9E9E</color>
 
 </resources>

@@ -55,7 +55,9 @@ public class LoginActivity extends AppCompatActivity {
                     // If login success, show welcome message
                     Toast.makeText(LoginActivity.this, "Welcome " + fullname, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    intent.putExtra("FULL_NAME", fullname); // Pass full name to HomeActivity
                     startActivity(intent);
+                    finish(); // Close LoginActivity
 
                 } else {
                     // If login fails
