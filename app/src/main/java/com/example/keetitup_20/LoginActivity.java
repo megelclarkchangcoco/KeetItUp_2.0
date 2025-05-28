@@ -54,6 +54,9 @@ public class LoginActivity extends AppCompatActivity {
                 if(fullname != null){
                     // If login success, show welcome message
                     Toast.makeText(LoginActivity.this, "Welcome " + fullname, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
+
                 } else {
                     // If login fails
                     Toast.makeText(LoginActivity.this, "Incorrect credentials", Toast.LENGTH_SHORT).show();

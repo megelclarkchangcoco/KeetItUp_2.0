@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5">
 
+    <!-- Image for face-->
     <LinearLayout
         android:id="@+id/Material_Face"
         android:layout_width="match_parent"
