@@ -7,20 +7,21 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="Keet It Up"
+        android:label="Keep It Up"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KeetItUp_20"
-        tools:targetApi="31">
+        tools:targetApi="35">
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
         <!-- Registration and Login Activities -->
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
-
-        <!-- MainActivity is the launcher activity -->
+            android:exported="false" /> <!-- MainActivity is the launcher activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
