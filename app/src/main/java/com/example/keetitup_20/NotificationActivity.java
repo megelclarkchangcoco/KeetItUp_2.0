@@ -38,6 +38,7 @@ public class NotificationActivity extends AppCompatActivity {
     private NotificationAdapter notificationAdapter;
     private DatabaseConnection db;
     private List<Map<String, String>> notificationList;
+    private TextView emptyNotificationText; // Added for empty state
 
     private Handler timeHandler = new Handler();
     private Runnable timeCheckerRunnable;
@@ -110,6 +111,7 @@ public class NotificationActivity extends AppCompatActivity {
         Log.d("NotifDebug", "User ID: " + userId + ", Full Name: " + fullName + ", Username: " + username);
 
         recyclerView = findViewById(R.id.notificationRecyclerView);
+        emptyNotificationText = findViewById(R.id.empty_notification_text); // Initialize TextView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         notificationList = db.getNotificationsForUser(userId);
@@ -148,9 +150,10 @@ public class NotificationActivity extends AppCompatActivity {
 
         notificationAdapter = new NotificationAdapter(this, notificationList, fullName, username, userId);
         recyclerView.setAdapter(notificationAdapter);
+        updateEmptyState(); // Update visibility of empty state
         Log.d("NotifDebug", "RecyclerView adapter set");
 
-        // nanvigate to Home, Notification, Add Task, Task List, Profile activity
+        // Navigate to Home, Notification, Add Task, Task List, Profile activity
         navHome.setOnClickListener(v -> navigateToActivity(HomeActivity.class));
 
         navNotifications.setOnClickListener(v -> navigateToActivity(NotificationActivity.class));
@@ -164,6 +167,16 @@ public class NotificationActivity extends AppCompatActivity {
         updateNavigationState();
         startNotificationTimeChecker();
         Log.d("NotifDebug", "Notification time checker started");
+    }
+
+    private void updateEmptyState() {
+        if (notificationList == null || notificationList.isEmpty()) {
+            emptyNotificationText.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            emptyNotificationText.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void updateNavigationState() {
@@ -182,6 +195,7 @@ public class NotificationActivity extends AppCompatActivity {
         if (db != null && recyclerView != null && userId != -1) {
             notificationList = db.getNotificationsForUser(userId);
             notificationAdapter.updateNotifications(notificationList);
+            updateEmptyState(); // Update visibility of empty state
             Log.d("NotifDebug", "Updated notification list in onResume: " + notificationList.size());
         }
         if (!pendingNotifications.isEmpty() && hasNotificationPermission()) {
@@ -215,6 +229,7 @@ public class NotificationActivity extends AppCompatActivity {
     private void checkAndShowNotificationPopup() {
         if (notificationList == null || notificationList.isEmpty()) {
             Log.d("NotifCheck", "No notifications in list.");
+            updateEmptyState(); // Update visibility of empty state
             return;
         }
 

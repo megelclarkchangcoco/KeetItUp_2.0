@@ -45,11 +45,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Vet Check Up"
+                android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="#000000"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/check_icon"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Category Icon -->
@@ -59,20 +59,20 @@
                 android:layout_height="16dp"
                 android:layout_marginTop="8dp"
                 android:src="@drawable/ic_category"
-                app:tint="#666666"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/task_name" />
+                app:layout_constraintTop_toBottomOf="@id/task_name"
+                app:tint="#666666" />
 
             <!-- Category Text -->
             <TextView
                 android:id="@+id/task_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
                 android:text="Pet Care"
-                android:textSize="13sp"
                 android:textColor="#666666"
+                android:textSize="13sp"
                 app:layout_constraintStart_toEndOf="@id/category_icon"
                 app:layout_constraintTop_toBottomOf="@id/task_name" />
 
@@ -81,23 +81,23 @@
                 android:id="@+id/frequency_icon"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/quarter"
-                app:tint="#666666"
                 app:layout_constraintStart_toEndOf="@id/task_category"
-                app:layout_constraintTop_toBottomOf="@id/task_name" />
+                app:layout_constraintTop_toBottomOf="@id/task_name"
+                app:tint="#666666" />
 
             <!-- Frequency Text -->
             <TextView
                 android:id="@+id/task_frequency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
                 android:text="Quarterly"
-                android:textSize="14sp"
                 android:textColor="#666666"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@id/frequency_icon"
                 app:layout_constraintTop_toBottomOf="@id/task_name" />
 
@@ -108,8 +108,8 @@
                 android:layout_height="24dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/progress_background"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/task_category" />
 
             <!-- Progress Bar (Yellow) -->
@@ -119,11 +119,11 @@
                 android:layout_width="0dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="8dp"
-                android:progress="75"
                 android:max="100"
+                android:progress="75"
                 android:progressDrawable="@drawable/progress_bar"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/task_category" />
 
             <!-- Progress Text (3/4) -->
@@ -131,14 +131,14 @@
                 android:id="@+id/progress_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3/4"
-                android:textSize="14sp"
-                android:textColor="#000000"
                 android:background="@android:color/transparent"
-                app:layout_constraintStart_toStartOf="@id/progress_bar"
+                android:text="3/4"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/progress_bar"
                 app:layout_constraintEnd_toEndOf="@id/progress_bar"
-                app:layout_constraintTop_toTopOf="@id/progress_bar"
-                app:layout_constraintBottom_toBottomOf="@id/progress_bar" />
+                app:layout_constraintStart_toStartOf="@id/progress_bar"
+                app:layout_constraintTop_toTopOf="@id/progress_bar" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

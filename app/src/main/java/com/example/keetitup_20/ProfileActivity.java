@@ -1,6 +1,7 @@
 package com.example.keetitup_20;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     // UI references
     private ImageView    imgProfile;
-    private TextView     tvDisplayName, tvFullName;
+    private TextView     tvDisplayName, tvFullName, tvUserManual;
     private EditText     nameInput, usernameInput, passwordInput;
     private Button       btnEditProfile, btnLogout;
 
@@ -45,6 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
         imgProfile      = findViewById(R.id.imgProfile);
         tvDisplayName   = findViewById(R.id.tvDisplayName);
         tvFullName      = findViewById(R.id.tvFullName);
+        tvUserManual    = findViewById(R.id.tvUserManual); // Reference to the "User Manual Here" TextView
         nameInput       = findViewById(R.id.name_input);
         usernameInput   = findViewById(R.id.username_input);
         passwordInput   = findViewById(R.id.password_input);
@@ -98,8 +100,23 @@ public class ProfileActivity extends AppCompatActivity {
 
         // 10) Bottom‐nav highlighting (Profile is active)
         setupBottomNavigation();
+
+        // 11) Open the user manual when the TextView is clicked
+        tvUserManual.setOnClickListener(v -> openUserManual());
     }
 
+    private void openUserManual() {
+        // Define the URL for the user manual
+        String url = "https://www.canva.com/design/DAGqoeCjxuk/LUfM0n1aAygors_2gv4orQ/edit";
+
+        // Create an Intent to open the URL in a web browser
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+
+        // Start the activity
+        startActivity(intent);
+    }
+
+    // 12) Begin editing profile: Enable inputs and change button text
     private void beginEditing(View v) {
         nameInput.setEnabled(true);
         usernameInput.setEnabled(true);
@@ -109,6 +126,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnEditProfile.setOnClickListener(this::attemptSave);
     }
 
+    // 13) Attempt to save the profile changes
     private void attemptSave(View v) {
         String newFullName = nameInput.getText().toString().trim();
         String newUsername = usernameInput.getText().toString().trim();
@@ -153,6 +171,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnEditProfile.setOnClickListener(this::beginEditing);
     }
 
+    // 14) Update the mood icon based on task completion status
     private void updateMoodIcon(ImageView bigIconImage,
                                 int completedTasks,
                                 int ongoingTasks,
@@ -176,6 +195,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    // 15) Setup bottom navigation (highlight Profile)
     private void setupBottomNavigation() {
         LinearLayout navHome          = findViewById(R.id.nav_home);
         LinearLayout navNotifications = findViewById(R.id.nav_notifications);

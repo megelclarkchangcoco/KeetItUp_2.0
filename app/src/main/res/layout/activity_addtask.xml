@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:text="Date Last Completed"
+                android:text="Target Finish Date"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -176,12 +176,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="1dp"
-                android:text="When was the last time this task was completed?"
+                android:text="By what date do you aim to complete this?"
                 android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/selectDate_text"
-                android:layout_width="150dp"
+                android:layout_width="330dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
@@ -318,7 +318,7 @@
 
             <Button
                 android:id="@+id/submitButton"
-                android:layout_width="310dp"
+                android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="15dp"

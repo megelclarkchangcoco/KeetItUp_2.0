@@ -45,22 +45,35 @@ public class RegisterActivity extends AppCompatActivity {
 
                 // Check if any fields are empty
                 if (Name.isEmpty() || User.isEmpty() || Pass.isEmpty()) {
-                    Toast.makeText(RegisterActivity.this, "Please fill all fields ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Check if the user already exists in the database
-                    if (dbConnection.isUserExist(Name, User)) {
-                        Toast.makeText(RegisterActivity.this, "Username or Fullname already exists!", Toast.LENGTH_SHORT).show();
+                    // Check password validity and show specific error messages
+                    if (!isValidPassword(Pass)) {
+                        if (!Pass.matches(".*[A-Z].*")) {
+                            Toast.makeText(RegisterActivity.this, "Password must contain at least one uppercase letter", Toast.LENGTH_SHORT).show();
+                        } else if (!Pass.matches(".*[0-9].*")) {
+                            Toast.makeText(RegisterActivity.this, "Password must contain at least one number", Toast.LENGTH_SHORT).show();
+                        } else if (!Pass.matches(".*[@#$%^&+=].*")) {
+                            Toast.makeText(RegisterActivity.this, "Password must contain at least one special character (@, #, $, %, ^, &, +, =)", Toast.LENGTH_SHORT).show();
+                        } else if (Pass.length() < 8) {
+                            Toast.makeText(RegisterActivity.this, "Password must be at least 8 characters long", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        // Create an instance of database helper and add the user
-                        dbConnection.addUsers(Name, User, Pass);
+                        // Check if the user already exists in the database
+                        if (dbConnection.isUserExist(Name, User)) {
+                            Toast.makeText(RegisterActivity.this, "Username or Fullname already exists!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Create an instance of database helper and add the user
+                            dbConnection.addUsers(Name, User, Pass);
 
-                        // Clear the input fields after successful entry
-                        registerName_input.setText("");
-                        registerUsername_input.setText("");
-                        registerPassword_input.setText("");
+                            // Clear the input fields after successful entry
+                            registerName_input.setText("");
+                            registerUsername_input.setText("");
+                            registerPassword_input.setText("");
 
-                        // Close the activity and go back after adding the user
-                        finish();
+                            // Close the activity and go back after adding the user
+                            finish();
+                        }
                     }
                 }
             }
@@ -74,5 +87,12 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    // Function to check if the password is valid
+    private boolean isValidPassword(String password) {
+        // Regular expression to check password validity
+        String passwordPattern = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).{8,}$";
+        return password.matches(passwordPattern);
     }
 }

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +19,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -99,16 +105,19 @@ public class HomeActivity extends AppCompatActivity {
                         progressBar
                 );
             } else {
-                // Find the first “Ongoing” task (or fall back to the first)
-                Map<String, String> currentTask = null;
-                for (Map<String, String> task : taskList) {
-                    if ("Ongoing".equalsIgnoreCase(task.get("status"))) {
-                        currentTask = task;
-                        break;
+                // Find the task with the nearest due date among ongoing tasks
+                Map<String, String> currentTask = findNearestDueTask(taskList);
+                if (currentTask == null) {
+                    // Fallback to first ongoing task if no due dates are imminent
+                    for (Map<String, String> task : taskList) {
+                        if ("Ongoing".equalsIgnoreCase(task.get("status"))) {
+                            currentTask = task;
+                            break;
+                        }
                     }
-                }
-                if (currentTask == null && !taskList.isEmpty()) {
-                    currentTask = taskList.get(0);
+                    if (currentTask == null && !taskList.isEmpty()) {
+                        currentTask = taskList.get(0);
+                    }
                 }
 
                 if (currentTask != null) {
@@ -126,8 +135,6 @@ public class HomeActivity extends AppCompatActivity {
                     progressBar.setMax(timelineTotal > 0 ? timelineTotal : 1);
                     progressBar.setProgress(progressCount);
                     taskProgressText.setText(progressCount + " / " + timelineTotal + " completed");
-
-                    // No checkIcon logic here (removed)
 
                     // Navigation to TaskDetailsActivity on card click
                     taskCardLayout.setOnClickListener(v -> {
@@ -214,7 +221,7 @@ public class HomeActivity extends AppCompatActivity {
 
         return result;
     }
-
+    // method for display task ui this only if no task assign
     private void updateEmptyTaskUI(
             ImageView bigIconImage,
             TextView taskProgressText,
@@ -234,7 +241,7 @@ public class HomeActivity extends AppCompatActivity {
         taskCardLayout.setVisibility(View.GONE);
         taskCardLayout.setClickable(false);
     }
-
+    // method for display icon with functionality based on task
     private void updateMoodIcon(
             ImageView bigIconImage,
             int completedTasks,
@@ -260,6 +267,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    // method for navigation to change activity with id
     private void navigateToActivity(Class<?> activityClass) {
         Intent intent = new Intent(HomeActivity.this, activityClass);
         if (fullName != null) intent.putExtra("FULL_NAME", fullName);
@@ -267,7 +275,6 @@ public class HomeActivity extends AppCompatActivity {
         if (userId != -1) intent.putExtra("USER_ID", userId);
         startActivity(intent);
     }
-
     private void updateNavigationState() {
         ImageView iconHome = findViewById(R.id.icon_home);
         TextView textHome = findViewById(R.id.text_home);
@@ -279,4 +286,76 @@ public class HomeActivity extends AppCompatActivity {
         view.setBackgroundResource(R.color.custom_yellow);
         view.postDelayed(() -> view.setBackgroundResource(android.R.color.transparent), 300);
     }
+
+    /**
+     * Find the task with the nearest due date among ongoing tasks within the next 7 days.
+     * Includes tasks due today. Uses Asia/Singapore time zone.
+     * @param taskList List of tasks to process
+     * @return The task with the nearest due date, or null if no valid tasks are found
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private Map<String, String> findNearestDueTask(List<Map<String, String>> taskList) {
+        // Current date and time in Asia/Singapore
+        LocalDate now = LocalDate.now(ZoneId.of("Asia/Singapore"));
+        LocalDate sevenDaysLater = now.plusDays(7);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Singapore"));
+
+        Map<String, String> nearestTask = null;
+        LocalDate nearestDueDate = null;
+
+        Log.d("HomeActivity", "Current date: " + now + ", 7 days later: " + sevenDaysLater);
+
+        for (Map<String, String> task : taskList) {
+            if ("Ongoing".equalsIgnoreCase(task.get("status"))) {
+                String notifyBefore = task.get("notify_before");
+                if (notifyBefore != null && !notifyBefore.isEmpty()) {
+                    try {
+                        // Extract date part (dd/MM/yyyy)
+                        String[] parts = notifyBefore.split(" ");
+                        if (parts.length >= 1) {
+                            String dueDateStr = parts[0];
+                            LocalDate dueDate = LocalDate.parse(dueDateStr,
+                                    java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+                            Log.d("HomeActivity", "Task ID: " + task.get("task_id") +
+                                    ", Name: " + task.get("task_name") +
+                                    ", Due: " + dueDate +
+                                    ", Status: " + task.get("status"));
+
+                            // Include tasks due today or within 7 days
+                            if (!dueDate.isBefore(now) && !dueDate.isAfter(sevenDaysLater)) {
+                                if (nearestDueDate == null || dueDate.isBefore(nearestDueDate)) {
+                                    nearestDueDate = dueDate;
+                                    nearestTask = task;
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.e("HomeActivity", "Error parsing due date for task ID " +
+                                task.get("task_id") + ": " + notifyBefore, e);
+                    }
+                } else {
+                    Log.d("HomeActivity", "Task ID: " + task.get("task_id") +
+                            ", No notify_before date");
+                }
+            } else {
+                Log.d("HomeActivity", "Task ID: " + task.get("task_id") +
+                        ", Skipped (not Ongoing)");
+            }
+        }
+
+        if (nearestTask != null) {
+            Log.d("HomeActivity", "Selected nearest task: ID " + nearestTask.get("task_id") +
+                    ", Name: " + nearestTask.get("task_name") +
+                    ", Due: " + nearestTask.get("notify_before"));
+        } else {
+            Log.d("HomeActivity", "No nearest task found");
+        }
+
+        return nearestTask;
+    }
+
+
 }

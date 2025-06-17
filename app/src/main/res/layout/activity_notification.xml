@@ -48,6 +48,18 @@
         </LinearLayout>
     </ScrollView>
 
+    <!-- Empty State TextView -->
+    <TextView
+        android:id="@+id/empty_notification_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No Notifications yet"
+        android:textColor="#888888"
+        android:textSize="18sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <!-- Bottom Navigation -->
     <include
         android:id="@+id/bottom_nav"

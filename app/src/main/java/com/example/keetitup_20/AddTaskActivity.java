@@ -27,6 +27,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -273,6 +274,30 @@ public class AddTaskActivity extends AppCompatActivity {
                 Toast.makeText(AddTaskActivity.this, "Please enter a category name", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            // ─── Check if category already exists in database and cardGrid ───
+            List<String> existingCategories = new ArrayList<>();
+            List<String> dbCategories = db.getDistinctCategories(userId);
+            if (dbCategories != null) {
+                existingCategories.addAll(dbCategories);
+            }
+            for (int i = 0; i < cardGrid.getChildCount(); i++) {
+                View child = cardGrid.getChildAt(i);
+                if (child instanceof CardView) {
+                    TextView categoryText = child.findViewById(R.id.categoryText);
+                    if (categoryText != null) {
+                        String cardCategory = categoryText.getText().toString().trim();
+                        if (!cardCategory.isEmpty() && !cardCategory.equals("+ Add New")) {
+                            existingCategories.add(cardCategory);
+                        }
+                    }
+                }
+            }
+            if (existingCategories.contains(categoryName)) {
+                Toast.makeText(AddTaskActivity.this, "Category '" + categoryName + "' already exists", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             // Reset all cards before adding new one
             for (int i = 0; i < cardGrid.getChildCount(); i++) {
                 View child = cardGrid.getChildAt(i);

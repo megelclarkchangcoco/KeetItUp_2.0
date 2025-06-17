@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -27,6 +28,7 @@ import androidx.cardview.widget.CardView;
 import androidx.gridlayout.widget.GridLayout;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -283,7 +285,7 @@ public class UpdateTaskActivity extends AppCompatActivity {
                 }
                 // Highlight the selected card
                 categoryCard.setCardBackgroundColor(Color.parseColor("#FFB300"));
-                oldCategory = categoryName;
+                oldCategory = categoryName; // Ensure oldCategory is updated globally
             });
 
             // Long press to remove
@@ -353,6 +355,29 @@ public class UpdateTaskActivity extends AppCompatActivity {
         submitBtn.setOnClickListener(v -> {
             String newCategory = categoryNameInput.getText().toString().trim();
             if (!newCategory.isEmpty()) {
+                // Check for duplicates in database and cardGrid
+                List<String> existingCategories = new ArrayList<>();
+                List<String> dbCategories = db.getDistinctCategories(userId);
+                if (dbCategories != null) {
+                    existingCategories.addAll(dbCategories);
+                }
+                for (int i = 0; i < cardGrid.getChildCount(); i++) {
+                    View child = cardGrid.getChildAt(i);
+                    if (child instanceof CardView) {
+                        TextView categoryText = child.findViewById(R.id.categoryText);
+                        if (categoryText != null) {
+                            String cardCategory = categoryText.getText().toString().trim();
+                            if (!cardCategory.isEmpty() && !cardCategory.equals("+ Add New")) {
+                                existingCategories.add(cardCategory);
+                            }
+                        }
+                    }
+                }
+                if (existingCategories.contains(newCategory)) {
+                    Toast.makeText(this, "Category '" + newCategory + "' already exists", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // Since there's no separate Categories table, this is a no-op for now
                 db.insertCategory(newCategory);
 
@@ -445,29 +470,42 @@ public class UpdateTaskActivity extends AppCompatActivity {
         // Combine notify date and time
         String newNotifyBefore = newNotifyDate + " " + newNotifyTime;
 
-        // Check what actually changed
-        boolean nameCategoryDescriptionChanged = !newTaskName.equals(oldTaskName)
-                || !newCategory.equals(oldCategory)
-                || !newDescription.equals(oldDescription);
+        // Fetch current task data to compare
+        Map<String, String> currentTask = db.getTaskById(taskId);
+        if (currentTask == null) {
+            Toast.makeText(this, "Task not found", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        boolean dateFrequencyNotifyChanged = !newLastCompletedDate.equals(oldLastCompletedDate)
-                || !newFrequency.equalsIgnoreCase(oldFrequency)
-                || !newNotifyBefore.equalsIgnoreCase(oldNotifyBefore);
+        String currentTaskName = currentTask.get("task_name");
+        String currentCategory = currentTask.get("category");
+        String currentDescription = currentTask.get("description");
+        String currentLastCompletedDate = currentTask.get("last_completed_date");
+        String currentFrequency = currentTask.get("frequency");
+        String currentNotifyBefore = currentTask.get("notify_before");
+
+        // Check for actual changes
+        boolean hasChanges = !newTaskName.equals(currentTaskName)
+                || !newCategory.equals(currentCategory)
+                || !newDescription.equals(currentDescription)
+                || !newLastCompletedDate.equals(currentLastCompletedDate)
+                || !newFrequency.equalsIgnoreCase(currentFrequency)
+                || !newNotifyBefore.equalsIgnoreCase(currentNotifyBefore);
 
         boolean updated = false;
 
-        // If name/category/description changed
-        if (nameCategoryDescriptionChanged) {
-            updated = db.updateTaskDetails(taskId, newTaskName, newCategory, newDescription);
-        }
-
-        // If date/frequency/notify changed
-        if (dateFrequencyNotifyChanged) {
-            updated = db.updateTaskDateFrequencyNotify(taskId, newLastCompletedDate, newFrequency, newNotifyBefore) || updated;
+        // Perform updates only if there are changes
+        if (hasChanges) {
+            if (!newTaskName.equals(currentTaskName) || !newCategory.equals(currentCategory) || !newDescription.equals(currentDescription)) {
+                updated = db.updateTaskDetails(taskId, newTaskName, newCategory, newDescription) || updated;
+            }
+            if (!newLastCompletedDate.equals(currentLastCompletedDate) || !newFrequency.equalsIgnoreCase(currentFrequency) || !newNotifyBefore.equalsIgnoreCase(currentNotifyBefore)) {
+                updated = db.updateTaskDateFrequencyNotify(taskId, newLastCompletedDate, newFrequency, newNotifyBefore) || updated;
+            }
         }
 
         if (updated) {
-            Toast.makeText(this, "Task updated successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Task, including all updated fields, updated successfully", Toast.LENGTH_SHORT).show();
             navigateTo(TaskListActivity.class);
         } else {
             Toast.makeText(this, "No changes detected or update failed", Toast.LENGTH_SHORT).show();

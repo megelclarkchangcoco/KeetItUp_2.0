@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class DatabaseConnection extends SQLiteOpenHelper {
     private final Context context;
-    private static final String databaseName = "KeepItUp_db_2.3";
+    private static final String databaseName = "KeepItUp_database";
     private static final int dbVersion = 8;
 
     // Table names
@@ -425,6 +425,37 @@ public class DatabaseConnection extends SQLiteOpenHelper {
                 new String[]{String.valueOf(taskId)}
         );
     }
+
+    // New method to remove progress
+    public boolean removeProgress(int userId, int taskId, String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsAffected = db.delete(progressTable,
+                "User_ID = ? AND Task_ID = ? AND Completed_Date = ?",
+                new String[]{String.valueOf(userId), String.valueOf(taskId), date});
+        db.close();
+        if (rowsAffected > 0) {
+            Log.d("DatabaseConnection", "Removed progress for taskId " + taskId + " on " + date);
+            return true;
+        } else {
+            Log.w("DatabaseConnection", "No progress found to remove for taskId " + taskId + " on " + date);
+            return false;
+        }
+    }
+
+    // New method to mark task as Ongoing
+    public void markTaskOngoing(int taskId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(column_status, "Ongoing");
+        int rows = db.update(taskTable, cv, column_Task_ID + " = ?", new String[]{String.valueOf(taskId)});
+        if (rows > 0) {
+            Log.d("DatabaseConnection", "Marked taskId " + taskId + " as Ongoing");
+        } else {
+            Log.w("DatabaseConnection", "No task found to mark as Ongoing for taskId " + taskId);
+        }
+        db.close();
+    }
+
     // method to calculate total progress of task
     private int calculateTotalProgress(String lastCompletedDateStr, String frequency, SimpleDateFormat sdf) {
         try {
@@ -736,11 +767,12 @@ public class DatabaseConnection extends SQLiteOpenHelper {
     public void updateLastCompletedDate(int taskId, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(column_last_day_completed, date);
+        cv.put(column_last_day_completed, date);  // Ensure date is passed as a string in the right format
         int rows = db.update(taskTable, cv, column_Task_ID + " = ?", new String[]{String.valueOf(taskId)});
         Log.d("DatabaseConnection", "Updated Last_Completed_Date for taskId " + taskId + ": " + date + ", rows affected: " + rows);
         db.close();
     }
+
 
     // method for display status of task for task list
     public int countTasksByStatus(int userId, String status) {

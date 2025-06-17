@@ -31,7 +31,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
     @Override
     public void onBindViewHolder(@NonNull TimelineViewHolder holder, int position) {
         String date = dates.get(position); // Get date string at current position
-        String formattedDate = formatDate(date); // Format date to readable string
+        String formattedDate = formatDate(date); // Format date to readable string with time
         // Set the formatted date text or original if formatting fails
         holder.dateText.setText(formattedDate != null ? formattedDate : date);
     }
@@ -42,19 +42,28 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
         return dates.size();
     }
 
-    // Helper method to convert date string from "dd/MM/yyyy" to "MMMM dd, yyyy" format
+    // Helper method to convert date string from "dd/MM/yyyy HH:mm" to "MMMM dd, yyyy hh:mm a" format
     private String formatDate(String date) {
         if (date == null || date.isEmpty()) {
             return null; // Return null if input invalid
         }
         try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-            Date parsedDate = inputFormat.parse(date); // Parse input date string
-            SimpleDateFormat outputFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
-            return outputFormat.format(parsedDate); // Format date to output format
+            // Try parsing the date with both date and time
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+            Date parsedDate = inputFormat.parse(date); // Parse input date string with time
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MMMM dd, yyyy hh:mm a", Locale.getDefault());
+            return outputFormat.format(parsedDate); // Format date and time to output format
         } catch (Exception e) {
-            // Return original date string if parsing fails
-            return date;
+            // Try parsing without time if the original format fails
+            try {
+                SimpleDateFormat fallbackInputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                Date parsedDate = fallbackInputFormat.parse(date);
+                SimpleDateFormat fallbackOutputFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
+                return fallbackOutputFormat.format(parsedDate); // Fallback to date-only format
+            } catch (Exception ex) {
+                // Return original date string if all parsing fails
+                return date;
+            }
         }
     }
 

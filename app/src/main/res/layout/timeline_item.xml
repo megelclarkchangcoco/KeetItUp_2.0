@@ -34,16 +34,16 @@
     tools:ignore="MissingConstraints" />
 
     <TextView
-    android:id="@+id/dateText"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:fontFamily="@font/fira_sans"
-    android:text="August 27, 2024"
-    android:textColor="@color/black"
-    android:textSize="14sp"
-    app:layout_constraintStart_toEndOf="@id/dot"
-    app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/dateText"
+        android:layout_width="287dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="August 27, 2024"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/dot"
+        app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

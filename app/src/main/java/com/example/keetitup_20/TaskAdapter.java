@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,16 +27,26 @@ import java.util.Locale;
 import java.util.Map;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
+    private static final String TAG = "TaskAdapter";
     private final List<Map<String, String>> taskList;
     private final String fullName;
     private final String username;
     private final int userId;
 
     public TaskAdapter(List<Map<String, String>> taskList, String fullName, String username, int userId) {
-        this.taskList = taskList;
+        this.taskList = taskList != null ? taskList : new ArrayList<>(); // Initialize with empty list if null
         this.fullName = fullName;
         this.username = username;
         this.userId = userId;
+    }
+
+    // Method to update the task list and notify the RecyclerView of changes
+    public void updateTasks(List<Map<String, String>> newTaskList) {
+        taskList.clear();
+        if (newTaskList != null) {
+            taskList.addAll(newTaskList);
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -61,7 +72,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         // 2) Get timeline total and completed count for progress bar
         int total = db.getTimelineTotal(taskId);
         int completed = db.getCompletedProgressCount(taskId);
-        holder.progressBar.setMax(total);
+        holder.progressBar.setMax(total); // Avoid division by zero handled by default max value
         holder.progressBar.setProgress(completed);
         holder.progressText.setText(completed + "/" + total);
 
@@ -81,12 +92,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             int updatedTotal = db.getTimelineTotal(taskId);
 
             if (updatedCompleted < updatedTotal) {
-                String today = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                        .format(new Date());
+                // Use date and time format
+                String today = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(new Date());
+                Log.d(TAG, "Check button clicked at: " + today); // Debug log
 
                 if (db.addProgress(userId, taskId, today)) {
                     db.updateLastCompletedDate(taskId, today);
-                    task.put("last_completed_date", today);
+                    task.put("last_completed_date", today); // Store the updated date in the task object
+                    Log.d(TAG, "Progress added, last_completed_date set to: " + today);
 
                     updatedCompleted = db.getCompletedProgressCount(taskId);
 
@@ -107,30 +120,80 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
                     // Set up Okay button
                     Button okButton = dialog.findViewById(R.id.ok_button);
-
-                    // instead, define pressed/default colors:
                     int[][] states = new int[][] {
                             new int[] { android.R.attr.state_pressed }, // pressed
                             new int[] {}                               // default
                     };
                     int[] colors = new int[] {
-                            Color.rgb(0,240,102),  // lime green when pressed
-                            Color.WHITE    // white by default
+                            Color.rgb(0, 240, 102),  // lime green when pressed
+                            Color.WHITE              // white by default
                     };
-                    // apply as a tint list:
                     okButton.setBackgroundTintList(new ColorStateList(states, colors));
 
-                    // keep your click-to-dismiss behavior:
-                    okButton.setOnClickListener(view -> dialog.dismiss());
+                    // Keep click-to-dismiss behavior with UI update
+                    final int finalUpdatedCompleted = updatedCompleted;
+                    final int finalUpdatedTotal = updatedTotal;
+                    okButton.setOnClickListener(view -> {
+                        dialog.dismiss();
+                        // Update UI to reflect new progress
+                        holder.progressBar.setProgress(finalUpdatedCompleted);
+                        holder.progressText.setText(finalUpdatedCompleted + "/" + finalUpdatedTotal);
+                        notifyItemChanged(position); // Refresh the item
+                    });
 
-                    // Show dialog and adjust size to full width
+                    // Set up Undo button
+                    Button undoButton = dialog.findViewById(R.id.undo_button);
+                    int[][] undoStates = new int[][] {
+                            new int[] { android.R.attr.state_pressed }, // pressed
+                            new int[] {}                               // default
+                    };
+                    int[] undoColors = new int[] {
+                            Color.rgb(255, 68, 68),  // Red when pressed
+                            Color.WHITE              // White by default
+                    };
+                    undoButton.setBackgroundTintList(new ColorStateList(undoStates, undoColors));
+
+                    // Undo button logic
+                    undoButton.setOnClickListener(view -> {
+                        List<String> progressDates = db.getProgressDates(userId, taskId);
+                        if (!progressDates.isEmpty()) {
+                            String latestDate = progressDates.get(progressDates.size() - 1);
+                            db.removeProgress(userId, taskId, latestDate);
+
+                            // Recalculate completed progress after removal
+                            int newCompleted = db.getCompletedProgressCount(taskId);
+
+                            // Revert to "Ongoing" if progress is less than total
+                            if (newCompleted < updatedTotal) {
+                                db.markTaskOngoing(taskId);
+                                task.put("status", "Ongoing");
+                            }
+
+                            // Update last completed date if no progress remains
+                            if (newCompleted == 0) {
+                                db.updateLastCompletedDate(taskId, null);
+                                task.put("last_completed_date", "");
+                            } else {
+                                progressDates = db.getProgressDates(userId, taskId);
+                                if (!progressDates.isEmpty()) {
+                                    db.updateLastCompletedDate(taskId, progressDates.get(progressDates.size() - 1));
+                                    task.put("last_completed_date", progressDates.get(progressDates.size() - 1));
+                                }
+                            }
+
+                            // Update UI and dismiss dialog
+                            holder.progressBar.setProgress(newCompleted);
+                            holder.progressText.setText(newCompleted + "/" + updatedTotal);
+                            notifyItemChanged(position);
+                            dialog.dismiss();
+                        }
+                    });
+
                     dialog.show();
                     WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
                     layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT; // Changed to MATCH_PARENT for full width
                     layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
                     dialog.getWindow().setAttributes(layoutParams);
-
-                    notifyItemChanged(position);
                 }
             }
         });
@@ -168,6 +231,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             v.getContext().startActivity(intent);
         });
     }
+
 
     @Override
     public int getItemCount() {
