@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base green gradient -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#00A900"
+                android:endColor="#0F9D58"
+                android:angle="270" />
+        </shape>
+    </item>
+
+    <!-- Glow circle in center -->
+    <item>
+        <shape android:shape="oval">
+            <size android:width="400dp" android:height="400dp" />
+            <gradient
+                android:type="radial"
+                android:centerX="50%"
+                android:centerY="50%"
+                android:gradientRadius="200dp"
+                android:startColor="@color/white"
+            android:endColor="#00000000" />
+        </shape>
+    </item>
+
+</layer-list>

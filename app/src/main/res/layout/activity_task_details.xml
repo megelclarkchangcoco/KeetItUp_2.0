@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_tasks_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TaskDetailsActivity">
+
+    <ImageView
+        android:id="@+id/back_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="31dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back"
+        tools:ignore="ContentDescription" />
+
+
+    <ImageView
+        android:id="@+id/editButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/back_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_edit"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/shareButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="31dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.862"
+        app:layout_constraintStart_toEndOf="@+id/back_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/share_icon"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/deleteButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/shareButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_trash"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <TextView
+        android:id="@+id/pageHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/fira_sans_bold"
+        android:text="Task Details"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_icon"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/taskName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:fontFamily="@font/fira_sans_medium"
+        android:text="Vet Check Up"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/pageHeading"
+        app:layout_constraintTop_toBottomOf="@+id/pageHeading"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/descriptionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="18dp"
+        android:text="Description"
+        android:textColor="@color/inactive_icon_color"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskName"
+        tools:ignore="HardcodedText,SmallSp,TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/taskDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="28dp"
+        android:text="Take Marci to her regular vet appointment at Happy Tails Veterinary Clinic. Bring her medical record and a stool sample for testing. Ask about updated vaccines."
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionLabel"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/category_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/category_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskDescription"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
+    <TextView
+        android:id="@+id/categoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="Category"
+        android:textColor="@color/inactive_icon_color"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/category_icon"
+        app:layout_constraintTop_toTopOf="@+id/category_icon"
+        tools:ignore="HardcodedText,SmallSp,TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="Pet Care"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/category_icon"
+        app:layout_constraintTop_toBottomOf="@+id/categoryLabel"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/calendar_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_icon"
+        app:srcCompat="@drawable/calendar_icon"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
+    <TextView
+        android:id="@+id/dateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="Date Last Completed"
+        android:textColor="@color/inactive_icon_color"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/calendar_icon"
+        app:layout_constraintTop_toTopOf="@+id/calendar_icon"
+        tools:ignore="HardcodedText,SmallSp,TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/dateLastCompleted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="August 27, 2024"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/calendar_icon"
+        app:layout_constraintTop_toBottomOf="@+id/dateLabel"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/loop_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendar_icon"
+        app:srcCompat="@drawable/loop_icon"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/repeatLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="Task Repeats"
+        android:textColor="@color/inactive_icon_color"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/loop_icon"
+        app:layout_constraintTop_toTopOf="@+id/loop_icon"
+        tools:ignore="HardcodedText,SmallSp,TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/taskRepeats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="Quarterly"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/loop_icon"
+        app:layout_constraintTop_toBottomOf="@+id/repeatLabel"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/notif_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loop_icon"
+        app:srcCompat="@drawable/notif_icon"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
+    <TextView
+        android:id="@+id/notifLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="Notification"
+        android:textColor="@color/inactive_icon_color"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/notif_icon"
+        app:layout_constraintTop_toTopOf="@+id/notif_icon"
+        tools:ignore="DuplicateIds,HardcodedText,SmallSp,TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/notificationDateandTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="1 day before"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/notif_icon"
+        app:layout_constraintTop_toBottomOf="@+id/notifLabel"
+        tools:ignore="HardcodedText" />
+
+
+    <!-- New Task Completion Timeline label -->
+    <TextView
+        android:id="@+id/timelineLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/fira_sans_bold"
+        android:text="Task Completion Timeline"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notificationDateandTime"
+        tools:ignore="HardcodedText" />
+
+    <!-- New RecyclerView for timeline -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/timelineRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="28dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_custom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timelineLabel"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+
+    <include
+        android:id="@+id/bottom_navigation_custom"
+        layout="@layout/button_customnav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.keetitup_20"
-        minSdk = 35
+        minSdk = 24 // Adjusted to support more devices
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -32,12 +32,15 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.gridlayout)
+    implementation("androidx.core:core:1.13.1")
+    implementation("androidx.work:work-runtime:2.9.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 }

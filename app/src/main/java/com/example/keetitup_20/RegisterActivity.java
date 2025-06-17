@@ -10,16 +10,14 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class RegisterActivity extends AppCompatActivity {
-    EditText registerName_input, registerPhonenumber_input, registerUsername_input, registerPassword_input;
+    EditText registerName_input, registerUsername_input, registerPassword_input;
     Button register_button;
     TextView toSigninButton;
 
     DatabaseConnection dbConnection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,44 +29,44 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Initialize UI components
         registerName_input = findViewById(R.id.registerName_input);
-        registerPhonenumber_input = findViewById(R.id.registerPhonenumber_input);
         registerUsername_input = findViewById(R.id.registerUsername_input);
         registerPassword_input = findViewById(R.id.registerPassword_input);
         register_button = findViewById(R.id.register_button);
         toSigninButton = findViewById(R.id.toSignin_button);
 
-        // event listener for register button
+        // Event listener for register button
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Retrieve the input from the EditText fields
                 String Name = registerName_input.getText().toString().trim();
-                String Phonenumber = registerPhonenumber_input.getText().toString().trim();
                 String User = registerUsername_input.getText().toString().trim();
                 String Pass = registerPassword_input.getText().toString().trim();
 
                 // Check if any fields are empty
-                if(Name.isEmpty() || Phonenumber.isEmpty() || User.isEmpty() || Pass.isEmpty()){
+                if (Name.isEmpty() || User.isEmpty() || Pass.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "Please fill all fields ", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    // create an instance of database helper and add the user
-                    DatabaseConnection myDatabase = new DatabaseConnection(RegisterActivity.this);
-                    myDatabase.addUsers(Name, Phonenumber, User, Pass);
+                } else {
+                    // Check if the user already exists in the database
+                    if (dbConnection.isUserExist(Name, User)) {
+                        Toast.makeText(RegisterActivity.this, "Username or Fullname already exists!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Create an instance of database helper and add the user
+                        dbConnection.addUsers(Name, User, Pass);
 
-                    //Clear the input fields after successfully entry
-                    registerName_input.setText("");
-                    registerPhonenumber_input.setText("");
-                    registerUsername_input.setText("");
-                    registerPassword_input.setText("");
+                        // Clear the input fields after successful entry
+                        registerName_input.setText("");
+                        registerUsername_input.setText("");
+                        registerPassword_input.setText("");
 
-                    // Close the activity and go back after adding the book
-                    finish();
+                        // Close the activity and go back after adding the user
+                        finish();
+                    }
                 }
             }
         });
 
-        // event listener for navigate to sign in activity
+        // Event listener for navigate to sign in activity
         toSigninButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +74,5 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 }

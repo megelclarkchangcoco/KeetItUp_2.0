@@ -26,7 +26,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-        // Intialize the database connection
+
+        // Initialize the database connection
         databaseConnection = new DatabaseConnection(this);
 
         // Initialize UI components
@@ -51,21 +52,28 @@ public class LoginActivity extends AppCompatActivity {
 
                 // Check credentials in database
                 String fullname = databaseConnection.checkLogin(username, password);
-                if(fullname != null){
-                    // If login success, show welcome message
+                if (fullname != null) {
                     Toast.makeText(LoginActivity.this, "Welcome " + fullname, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    intent.putExtra("FULL_NAME", fullname); // Pass full name to HomeActivity
-                    startActivity(intent);
-                    finish(); // Close LoginActivity
 
-                } else {
+                    // Get user ID to ensure user exists
+                    int userId = databaseConnection.getUserId(username);
+                    if (userId != -1) {
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        intent.putExtra("FULL_NAME", fullname);
+                        intent.putExtra("USERNAME", username);
+                        intent.putExtra("USER_ID", userId); // Pass user ID as well
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Error retrieving user information", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
                     // If login fails
                     Toast.makeText(LoginActivity.this, "Incorrect credentials", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
 
         // Navigate to sign up activity
         toSignupButton.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +83,5 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 }

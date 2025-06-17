@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:id="@+id/mainLayout">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/list_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+
+            <!-- Checkmark Circle -->
+            <ImageView
+                android:id="@+id/check_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_check"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#666666"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+            <!-- Task Name -->
+            <TextView
+                android:id="@+id/task_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Vet Check Up"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/check_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Category Icon -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/category_icon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_category"
+                app:tint="#666666"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/task_name" />
+
+            <!-- Category Text -->
+            <TextView
+                android:id="@+id/task_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
+                android:text="Pet Care"
+                android:textSize="13sp"
+                android:textColor="#666666"
+                app:layout_constraintStart_toEndOf="@id/category_icon"
+                app:layout_constraintTop_toBottomOf="@id/task_name" />
+
+            <!-- Frequency Icon -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/frequency_icon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/quarter"
+                app:tint="#666666"
+                app:layout_constraintStart_toEndOf="@id/task_category"
+                app:layout_constraintTop_toBottomOf="@id/task_name" />
+
+            <!-- Frequency Text -->
+            <TextView
+                android:id="@+id/task_frequency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
+                android:text="Quarterly"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                app:layout_constraintStart_toEndOf="@id/frequency_icon"
+                app:layout_constraintTop_toBottomOf="@id/task_name" />
+
+            <!-- Progress Bar Background (Gray) -->
+            <View
+                android:id="@+id/progress_background"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/progress_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/task_category" />
+
+            <!-- Progress Bar (Yellow) -->
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="8dp"
+                android:progress="75"
+                android:max="100"
+                android:progressDrawable="@drawable/progress_bar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/task_category" />
+
+            <!-- Progress Text (3/4) -->
+            <TextView
+                android:id="@+id/progress_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3/4"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:background="@android:color/transparent"
+                app:layout_constraintStart_toStartOf="@id/progress_bar"
+                app:layout_constraintEnd_toEndOf="@id/progress_bar"
+                app:layout_constraintTop_toTopOf="@id/progress_bar"
+                app:layout_constraintBottom_toBottomOf="@id/progress_bar" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

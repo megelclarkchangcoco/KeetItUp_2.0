@@ -1,0 +1,133 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/share_background"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="24dp">
+
+  <!-- Back Button at top-left -->
+  <ImageButton
+      android:id="@+id/btn_back"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_alignParentStart="true"
+      android:layout_marginTop="16dp"
+      android:background="?attr/selectableItemBackgroundBorderless"
+      android:contentDescription="Back"
+      android:src="@drawable/ic_back"
+      tools:ignore="TouchTargetSizeCheck" />
+
+  <!-- Profile Emoji below back button -->
+
+  <!-- Card container below emoji -->
+
+  <!-- Star icon below card container -->
+
+  <ImageView
+      android:id="@+id/img_profile_emoji"
+      android:layout_width="332dp"
+      android:layout_height="317dp"
+      android:layout_below="@id/btn_back"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentEnd="true"
+      android:layout_marginStart="0dp"
+      android:layout_marginTop="95dp"
+      android:layout_marginEnd="4dp"
+      android:src="@drawable/share_elated" />
+
+  <LinearLayout
+      android:id="@+id/card_text_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentTop="true"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="435dp"
+      android:layout_marginEnd="8dp"
+      android:background="@android:color/white"
+      android:clipToPadding="false"
+      android:elevation="6dp"
+      android:orientation="vertical"
+      android:padding="24dp">
+
+    <!-- User name text -->
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fira_sans_bold"
+        android:text="Keep It Up! Amy"
+        android:textColor="#000000"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <!-- Encouragement short text -->
+    <TextView
+        android:id="@+id/tv_encouragement_short"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="You're doing very well"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <!-- Spacer -->
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="16dp" />
+
+    <!-- Task completion text -->
+    <TextView
+        android:id="@+id/tv_task_completed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fira_sans"
+        android:text="You Completed of your (Your Task Name) Task"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <!-- Encouragement text -->
+    <TextView
+        android:id="@+id/tv_encouragement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/fira_sans"
+        android:text="You're Doing Very Well, I am very proud of you 😊"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+  </LinearLayout>
+
+  <!-- Keep it up label below card container -->
+  <ImageView
+      android:id="@+id/img_star"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:layout_below="@id/card_text_container"
+      android:layout_alignParentStart="true"
+      android:layout_marginStart="137dp"
+      android:layout_marginTop="24dp"
+      android:src="@drawable/star_5_white" />
+
+  <TextView
+      android:id="@+id/tv_keep_it_up_label"
+      android:layout_width="107dp"
+      android:layout_height="26dp"
+      android:layout_below="@id/card_text_container"
+      android:layout_alignParentEnd="true"
+      android:layout_marginStart="3dp"
+      android:layout_marginTop="40dp"
+      android:layout_marginEnd="41dp"
+      android:layout_toEndOf="@+id/img_star"
+      android:text="keep it up"
+      android:textColor="@android:color/white"
+      android:textSize="16sp"
+      android:textStyle="bold" />
+
+</RelativeLayout>

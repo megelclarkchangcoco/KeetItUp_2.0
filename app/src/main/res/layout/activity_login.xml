@@ -14,7 +14,7 @@
       android:layout_width="69dp"
       android:layout_height="60dp"
       android:layout_marginTop="40dp"
-      android:src="@drawable/star_5_black"
+      android:src="@drawable/star_5_yellow"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
@@ -112,9 +112,10 @@
       android:inputType="text"
       android:textColorHint="@color/gray"
       android:textSize="15sp"
-      app:layout_constraintTop_toBottomOf="@id/username_text"
+      app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
+      app:layout_constraintTop_toBottomOf="@id/username_text"
+      tools:ignore="TouchTargetSizeCheck" />
 
   <!-- Password Label -->
   <TextView
@@ -143,40 +144,32 @@
       android:inputType="textPassword"
       android:textColorHint="@color/gray"
       android:textSize="15dp"
-      app:layout_constraintTop_toBottomOf="@id/password_text"
+      app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
+      app:layout_constraintTop_toBottomOf="@id/password_text"
+      tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
 
   <!-- Forgot Password -->
-  <TextView
-      android:id="@+id/forgot_password"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="5dp"
-      android:layout_marginStart="32dp"
-      android:text="Forgot Password?"
-      android:textColor="@color/black"
-      android:textSize="10sp"
-      android:textStyle="bold"
-      app:layout_constraintTop_toBottomOf="@id/password_input"
-      app:layout_constraintStart_toStartOf="parent" />
 
   <!-- Login Button -->
+
+  <!-- Divider -->
   <com.google.android.material.button.MaterialButton
       android:id="@+id/login_button"
       android:layout_width="309dp"
       android:layout_height="35dp"
-      android:layout_marginTop="10dp"
-      android:backgroundTint="@color/black"
+      android:layout_marginTop="20dp"
+      android:backgroundTint="@color/custom_yellow"
       android:text="Log In"
       android:textColor="#FFFFFF"
       android:textSize="12sp"
       app:cornerRadius="5dp"
-      app:layout_constraintTop_toBottomOf="@id/forgot_password"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.509"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
+      app:layout_constraintTop_toBottomOf="@+id/password_input"
+      tools:ignore="MissingConstraints,TouchTargetSizeCheck" />
 
-  <!-- Divider -->
   <View
       android:id="@+id/divider"
       android:layout_width="309dp"
@@ -202,13 +195,14 @@
       android:id="@+id/toSignup_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
       android:layout_marginStart="4dp"
-      android:text="Sign up"
-      android:textStyle="bold"
+      android:layout_marginTop="20dp"
       android:clickable="true"
       android:focusable="true"
+      android:text="Sign up"
+      android:textStyle="bold"
+      app:layout_constraintStart_toEndOf="@id/slogan_text2"
       app:layout_constraintTop_toBottomOf="@id/divider"
-      app:layout_constraintStart_toEndOf="@id/slogan_text2" />
+      tools:ignore="TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

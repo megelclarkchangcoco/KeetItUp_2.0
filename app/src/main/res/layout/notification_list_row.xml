@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:id="@+id/mainLayout">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/notification_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="2dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="@drawable/card_bg_selector">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+
+            <!-- Task Name -->
+            <TextView
+                android:id="@+id/task_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fira_sans_medium"
+                android:text="Vet Check Up"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/time_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Time Container -->
+            <LinearLayout
+                android:id="@+id/time_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="end"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- Time -->
+                <TextView
+                    android:id="@+id/notification_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/fira_sans_medium"
+                    android:text="00:00"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <!-- Date (Month/Day/Year) -->
+                <TextView
+                    android:id="@+id/notification_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/fira_sans"
+                    android:text="MM/DD/YYYY"
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- Category Icon -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/category_icon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_category"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/task_name"
+                app:tint="#666666" />
+
+            <!-- Category Text -->
+            <TextView
+                android:id="@+id/task_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/fira_sans"
+                android:text="Pet Care"
+                android:textColor="#666666"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@id/category_icon"
+                app:layout_constraintTop_toBottomOf="@id/task_name" />
+
+            <!-- Frequency Icon -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/frequency_icon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="9dp"
+                android:src="@drawable/quarter"
+                app:layout_constraintStart_toEndOf="@id/task_category"
+                app:layout_constraintTop_toBottomOf="@id/task_name"
+                app:tint="#666666" />
+
+            <!-- Frequency Text -->
+            <TextView
+                android:id="@+id/task_frequency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/fira_sans"
+                android:text="Quarterly"
+                android:textColor="#666666"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@id/frequency_icon"
+                app:layout_constraintTop_toBottomOf="@id/task_name" />
+
+            <!-- Last Completed Text -->
+            <TextView
+                android:id="@+id/last_completed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/fira_sans"
+                android:text="Last completed August 17, 2023"
+                android:textColor="#666666"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/task_category" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

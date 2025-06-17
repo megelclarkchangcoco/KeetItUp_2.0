@@ -24,25 +24,25 @@
             android:orientation="vertical"
             android:paddingBottom="20dp">
 
-            <!-- Image for face -->
+            <!-- ───── Image for Face ───── -->
             <LinearLayout
                 android:id="@+id/Material_Face"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="290dp"
                 android:background="#FFFFFF"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/ic_big_icon"
                     android:layout_width="wrap_content"
-                    android:layout_height="310dp"
-                    android:contentDescription="Happy face image"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/elated" />
+                    app:srcCompat="@drawable/ic_big_elated" />
             </LinearLayout>
 
-            <!-- Welcome Section -->
+            <!-- ───── Welcome / Encouragement Section ───── -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,16 +69,75 @@
                     android:textColor="#666666"
                     android:textSize="16sp" />
 
+                <!-- ───── “Schedule” Label ───── -->
                 <TextView
-                    android:id="@+id/stats_text"
+                    android:id="@+id/schedule_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Schedule"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- ───── Two‐Week Horizontal Strip ───── -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/calendar_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="Today you conquered 5 out of 5 quests — warrior energy! Perfect for tomorrow. 🚀 Good vibes and steady flow."
-                    android:textColor="#666666"
-                    android:textSize="14sp" />
+                    android:layout_marginBottom="4dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:background="@drawable/border"
+                    app:cardCornerRadius="4dp"
+                    app:cardUseCompatPadding="true">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <!-- Row 1: “THIS WEEK” | “NEXT WEEK” -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/this_week_label"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="THIS WEEK"
+                                android:textColor="@android:color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/next_week_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="NEXT WEEK"
+                                android:textColor="@android:color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- Row 2: Horizontal RecyclerView for 14 day‐cells -->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_calendar_strip"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:overScrollMode="never"
+                            android:paddingBottom="8dp"
+                            android:scrollbars="none"
+                            tools:ignore="SpeakableTextPresentCheck" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- ───── Task Card (unchanged) ───── -->
                 <TextView
                     android:id="@+id/productivity_header"
                     android:layout_width="match_parent"
@@ -89,128 +148,127 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <!-- Task Card -->
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/task_card_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/border"
                     android:clickable="true"
                     android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardBackgroundColor="#FFFFFF"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp">
+                    android:padding="12dp"
+                    android:layout_marginBottom="16dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <!-- Checkmark Circle -->
+<!--                    <ImageView-->
+<!--                        android:id="@+id/check_icon"-->
+<!--                        android:layout_width="48dp"-->
+<!--                        android:layout_height="48dp"-->
+<!--                        android:background="@drawable/circle_background"-->
+<!--                        android:clickable="true"-->
+<!--                        android:contentDescription="Mark task as complete"-->
+<!--                        android:focusable="true"-->
+<!--                        android:padding="8dp"-->
+<!--                        android:src="@drawable/ic_check"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"-->
+<!--                        app:tint="#666666" />-->
+
+                    <!-- Task Name -->
+                    <TextView
+                        android:id="@+id/task_name"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="20dp">
+                        android:layout_marginEnd="8dp"
+                        android:text="Vet Check Up"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <!-- Category and Frequency Row -->
-                        <TextView
-                            android:id="@+id/task_title"
-                            android:layout_width="297dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="12dp"
-                            android:text="Vet Check Up"
-                            android:textColor="#333333"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                    <!-- Category Icon -->
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/category_icon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/ic_category"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/task_name"
+                        app:tint="#666666" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="12dp"
-                            android:orientation="horizontal">
+                    <!-- Category Text -->
+                    <TextView
+                        android:id="@+id/task_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Pet Care"
+                        android:textColor="#666666"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toEndOf="@id/category_icon"
+                        app:layout_constraintTop_toBottomOf="@id/task_name" />
 
-                            <!-- Category Section -->
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                    <!-- Frequency Icon -->
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/frequency_icon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/quarter"
+                        app:layout_constraintStart_toEndOf="@id/task_category"
+                        app:layout_constraintTop_toBottomOf="@id/task_name"
+                        app:tint="#666666" />
 
-                                <ImageView
-                                    android:layout_width="16dp"
-                                    android:layout_height="16dp"
-                                    android:layout_marginEnd="6dp"
-                                    android:src="@drawable/ic_category"
-                                    android:contentDescription="Category icon"
-                                    app:tint="#999999" />
+                    <!-- Frequency Text -->
+                    <TextView
+                        android:id="@+id/task_frequency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Quarterly"
+                        android:textColor="#666666"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toEndOf="@id/frequency_icon"
+                        app:layout_constraintTop_toBottomOf="@id/task_name" />
 
-                                <TextView
-                                    android:id="@+id/task_category"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Pet Care"
-                                    android:textColor="#999999"
-                                    android:textSize="14sp" />
+                    <!-- Progress Bar -->
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="8dp"
+                        android:max="100"
+                        android:progress="75"
+                        android:progressDrawable="@drawable/progress_bar"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/task_category" />
 
-                            </LinearLayout>
+                    <!-- Progress Text -->
+                    <TextView
+                        android:id="@+id/progress_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:text="3/4"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@id/progress_bar"
+                        app:layout_constraintEnd_toEndOf="@id/progress_bar"
+                        app:layout_constraintStart_toStartOf="@id/progress_bar"
+                        app:layout_constraintTop_toTopOf="@id/progress_bar" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            <!-- Frequency Section -->
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="16dp"
-                                    android:layout_height="16dp"
-                                    android:layout_marginEnd="6dp"
-                                    android:src="@drawable/ic_cycle"
-                                    android:contentDescription="Frequency icon"
-                                    app:tint="#999999" />
-
-                                <TextView
-                                    android:id="@+id/task_frequency"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Quarterly"
-                                    android:textColor="#999999"
-                                    android:textSize="14sp" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <!-- Date Section -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_marginEnd="6dp"
-                                android:src="@drawable/ic_calendar"
-                                android:contentDescription="Calendar icon"
-                                app:tint="#999999" />
-
-                            <TextView
-                                android:id="@+id/task_date"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Last completed August 17, 2023"
-                                android:textColor="#999999"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
+                <!-- (…any other content below…) -->
 
             </LinearLayout>
 
         </LinearLayout>
-
     </ScrollView>
 
     <!-- Bottom Navigation -->

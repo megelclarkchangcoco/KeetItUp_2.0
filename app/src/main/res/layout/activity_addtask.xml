@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
+        android:clipToPadding="false"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_custom"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,50 +79,48 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <GridLayout
+            <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/cardGrid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:columnCount="1"
-                android:rowCount="1">
+                app:columnCount="3"
+                app:orientation="horizontal">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/Addnew_card"
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    android:layout_margin="8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="4dp">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/Addnew_card"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_margin="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="2dp"
+                        app:layout_columnWeight="1"
+                        app:layout_rowWeight="0"
+                        app:layout_gravity="fill">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/Addnew_cardText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="+ Add new"
-                            android:textAlignment="center"
-                            android:textColor="@color/gray"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-            </GridLayout>
+                            <TextView
+                                android:id="@+id/Addnew_cardText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="+ Add New"
+                                android:textAlignment="center"
+                                android:textColor="@color/gray"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+            </androidx.gridlayout.widget.GridLayout>
 
             <TextView
                 android:id="@+id/description_text"
@@ -187,14 +186,18 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border"
+                android:clickable="true"
                 android:drawableStart="@drawable/ic_calendar"
                 android:drawablePadding="6dp"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 android:paddingStart="8dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="10dp"
                 android:text="Select Date"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/remind_text"
@@ -232,7 +235,6 @@
                     android:layout_height="38dp"
                     android:layout_weight="1"
                     android:minHeight="30dp"
-
                     android:paddingVertical="8dp"
                     android:text="Select Task Repetition"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -264,37 +266,80 @@
                 android:textColor="#808080"
                 android:textSize="14sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp">
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal">
 
-                <AutoCompleteTextView
-                    android:id="@+id/selectnotify_Text"
-                    android:layout_width="match_parent"
-                    android:layout_height="38dp"
+                <TextView
+                    android:id="@+id/notify_date_text"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:minHeight="30dp"
-                    android:paddingVertical="8dp"
-                    android:text="Select Task Repetition"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textSize="14sp" />
+                    android:background="@drawable/border"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_calendar"
+                    android:drawablePadding="6dp"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingStart="8dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="Select Notify Date"
+                    android:textSize="12sp"
+                    tools:ignore="TouchTargetSizeCheck" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/notify_time_text"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_clock"
+                    android:drawablePadding="6dp"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingStart="8dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="Select Notify Time"
+                    android:textSize="12sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="#FFB300"
+                android:padding="0dp"
+                android:text="Add Task"
+                android:textColor="#FFFFFF"
+                app:cornerRadius="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </LinearLayout>
+            </ScrollView>
 
-    </ScrollView>
-
-    <include
+        <include
         android:id="@+id/bottom_navigation_custom"
-        layout="@layout/button_customnav"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        layout="@layout/button_customnav" />
+    </androidx.constraintlayout.widget.ConstraintLayout>

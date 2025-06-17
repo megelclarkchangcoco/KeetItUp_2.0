@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@color/card_default_color">
+
+    <TextView
+        android:id="@+id/tvPopupTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notification Title"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#000"/>
+
+    <TextView
+        android:id="@+id/tvPopupMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notification message goes here."
+        android:layout_marginTop="8dp"
+        android:textColor="#333"/>
+
+    <Button
+        android:id="@+id/btnPopupClose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Close"
+        android:backgroundTint="@color/custom_yellow"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>
